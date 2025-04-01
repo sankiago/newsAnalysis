@@ -1,0 +1,188 @@
+As an ArcGIS StoryMaps expert, transform the following news article into an interactive geographic narrative using ONLY components documented in the ArcGIS StoryMaps builder. Return the response as structured JSON:
+
+{
+  "storymap": {
+    "title": "Story Title",
+    "theme": "Theme Name",
+    "cover": {
+      "media_type": "image/video",
+      "source": "URL/description",
+      "focal_point": "coordinates (optional)"
+    },
+    "blocks": [
+      {
+        "type": "text",
+        "subtype": "heading1|heading2|paragraph|quote|list",
+        "content": "Formatted text",
+        "alignment": "left|center|right",
+        "text_color": "hex/rgb (optional)"
+      },
+      {
+        "type": "map",
+        "subtype": "express|webmap|webscene",
+        "basemap": "basemap name",
+        "layers": [
+          {
+            "name": "layer name",
+            "features": [
+              {
+                "type": "point|line|area",
+                "coordinates": [],
+                "popup": {
+                  "title": "Popup title",
+                  "description": "Content",
+                  "media": "image URL (optional)"
+                }
+              }
+            ]
+          }
+        ],
+        "navigation": true|false,
+        "legend": true|false
+      },
+      {
+        "type": "media",
+        "subtype": "image|video|gallery|swipe|timeline",
+        "sources": ["URL1", "URL2"],
+        "caption": "Descriptive text",
+        "size": "small|medium|large|float",
+        "display_mode": "fit|fill"
+      },
+      {
+        "type": "immersive",
+        "subtype": "sidecar|maptour",
+        "layout": "docked|floating|slideshow",
+        "slides": [
+          {
+            "media_panel": {
+              "type": "map|image|video",
+              "source": "URL/config"
+            },
+            "narrative_panel": [
+              "allowed text/media blocks"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "interactive",
+        "subtype": "button|embed",
+        "label": "Element text",
+        "action": "URL|map_action"
+      }
+    ],
+    "design": {
+      "accent_color": "hex/rgb",
+      "font_family": "font name",
+      "logo": {
+        "source": "URL (optional)",
+        "position": "header|cover"
+      }
+    }
+  }
+}
+
+Implementation Rules:
+1. Analyze news content to identify:
+   - Key geographic entities (coordinates, affected areas, routes)
+   - Temporal event sequence
+   - Geospatial multimedia (geo-tagged images/videos)
+
+2. Prioritize components:
+   - Express maps for locations
+   - Web maps for complex data
+   - Sidecars for spatial comparisons
+   - Maptours for geographic journeys
+
+3. Include at minimum:
+   - 1 interactive map with layers
+   - 1 immersive block
+   - 1 temporal component (timeline/swipe)
+   - 2+ geographic annotations
+
+Full Example for Wildfire News:
+
+{
+  "storymap": {
+    "title": "Sierra Nevada Wildfire: Impact Analysis",
+    "theme": "summit",
+    "cover": {
+      "media_type": "image",
+      "source": "https://example.com/sat-fire.jpg",
+      "focal_point": "37.0902,-95.7129"
+    },
+    "blocks": [
+      {
+        "type": "text",
+        "subtype": "heading1",
+        "content": "Geospatial Event Timeline",
+        "alignment": "center",
+        "text_color": "#C62121"
+      },
+      {
+        "type": "map",
+        "subtype": "express",
+        "basemap": "topographic",
+        "layers": [
+          {
+            "name": "Impact Zone",
+            "features": [
+              {
+                "type": "area",
+                "coordinates": [[-118.3,34.1],[-118.1,34.2],[-117.9,34.0]],
+                "popup": {
+                  "title": "Fire Core",
+                  "description": "12,000 acres affected",
+                  "media": "https://example.com/fire-core.jpg"
+                }
+              }
+            ]
+          }
+        ],
+        "navigation": true,
+        "legend": true
+      },
+      {
+        "type": "media",
+        "subtype": "swipe",
+        "sources": [
+          "https://example.com/pre-fire.jpg",
+          "https://example.com/post-fire.jpg"
+        ],
+        "caption": "Satellite Comparison: Before/After",
+        "size": "large",
+        "display_mode": "fit"
+      },
+      {
+        "type": "immersive",
+        "subtype": "sidecar",
+        "layout": "docked",
+        "slides": [
+          {
+            "media_panel": {
+              "type": "map",
+              "source": "express-map-1"
+            },
+            "narrative_panel": [
+              {
+                "type": "text",
+                "subtype": "heading2",
+                "content": "Hourly Fire Spread Patterns"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "design": {
+      "accent_color": "#C62121",
+      "font_family": "Open Sans",
+      "logo": {
+        "source": "https://example.com/em-logo.png",
+        "position": "header"
+      }
+    }
+  }
+}
+
+Input: [Insert full plain news text here]

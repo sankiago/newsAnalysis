@@ -1,0 +1,23 @@
+Asegúrate de incluir las secciones: Contexto (en la que se explica lo necesario para que el lector no quede perdido en la lectura), Conflicto, Hecho Central, ¿Por qué es importante? y Conclusión. Algunas secciones opcionales son: ¿Cómo funciona? (Si el contexto o conflicto requiere explicar algún proceso o mecanismo industrial jurídico o social), Resultados (Si se habla de algún estudio o proceso jurídico), "Sí, pero" (Si el artículo exhibe un contrapunto o cotraargumento al punto de vista principal expuesto en la noticia), Estamos pensando (Si el autor del artículo expresa una opinión personal frente al asunto tratado en el texto más allá de lo factual, alguna predicción u opinión fuerte). 
+
+Regálame la respuesta en un json con el siguiente formato sin más explicaciones {
+	title: el que ya está en el artículo pero en español
+	subtitulo: texto cautivante según las tendencias periodísticas actuales,
+	coordinate_system: sistema de coordenadas usadas en todo el json
+	abstract: {
+		details:texto, 
+		location: (objeto geográfico más relevante en la noticia) {
+				label: input geocodificable por ArcGIS Pro lo más preciso posible (Al menos País, ciudad)
+				type: El tipo de objeto geográfico (punto, puntos, líneas, polígonos o área)
+				coordinates: [[lat, long (coordenadas del objeto geográfico)]]
+		}
+	},
+	body: [{
+			section: nombre de la sección,
+			content: contenido de la sección,
+			location: {
+				label: input geocodificable por ArcGIS Pro lo más preciso posible (Al menos País, ciudad)
+				type: El tipo de objeto geográfico (punto, puntos, líneas, polígonos o área)
+				coordinates: [[lat, long (coordenadas del objeto geográfico)]]
+		}]
+}

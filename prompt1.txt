@@ -1,0 +1,161 @@
+Your task is to transform a traditional news article into an interactive story designed using ArcGIS StoryMap Builder. Use **only the official supported components** provided by the StoryMap platform, such as narrative text, maps, media, immersive blocks, and spatial visualizations. The **geographic component** of the story must be emphasized and expressed visually through maps and location-aware content.
+
+Output your response as a **JSON object** that represents the full structure and content of the StoryMap.
+
+The JSON must include the following structure:
+
+1. **Story Metadata**:
+   - `title`: The main title of the story.
+   - `subtitle` (optional)
+   - `author` (optional)
+   - `cover`: An object with `type` (`minimal`, `top`, `full`, `card`, `split`, `side-by-side`) and associated `media` (image or video URL)
+
+2. **Story Body (`body`)**: An ordered list of content blocks, each with a `type` and relevant properties. Valid types include:
+   - `heading`: with `level` (`1`, `2`, or `3`) and `text`
+   - `paragraph`: body text
+   - `large_paragraph`: longer body text
+   - `quote`: cited statement
+   - `bulleted_list`: list of bullet items
+   - `numbered_list`: list of ordered items
+   - `separator`: visual break
+   - `image`: with `url`, `alt_text`, `caption`, and `size` (`small`, `medium`, `large`, `float-left`, `float-right`)
+   - `video`: with `url`, `caption`, `autoplay` (`true` or `false`)
+   - `audio`: with `url` and optional `caption`
+   - `button`: with `text` and `url`
+   - `map`: with `map_type` (`express`, `webmap`, or `webscene`), `center` coordinates, `zoom`, optional `features` (points, lines, areas), and `legend` flag
+   - `embed`: with `url` or `iframe`, and `mode` (`card` or `interactive`)
+   - `timeline`: with a list of events (each with `date`, `text`, and optional `image`)
+   - `swipe`: with `left` and `right` items (`type`: `image` or `map`)
+   - `sidecar`: with `layout` (`docked`, `floating`, or `slideshow`), and `slides`, each including:
+     - `media_panel`: media type and content
+     - `narrative_panel`: list of narrative blocks
+   - `map_tour`: with `layout` (`guided-map`, `guided-media`, `explorer-grid`, `explorer-list`), and a list of places with location, media, and narrative
+
+3. **Optional Final Section**:
+   - `credits`: list of attributions or citations
+   - `related_links`: list of buttons with descriptive text and URLs
+
+You must organize the story in a narrative style that is well-suited for StoryMaps: use thematic or chronological sections, provide context, highlight the spatial aspects (locations, regions, routes), and integrate multimedia resources (images, video, audio, timeline) as appropriate.
+
+If the story includes multiple key locations, use a `map_tour`. If it's time-based, include a `timeline`. For comparisons, use `swipe`. For guided multimedia storytelling, use `sidecar`.
+
+**Only return a well-structured JSON object**. Do not include explanatory notes or commentary.
+
+**Example minimal output:**
+
+```json
+{
+  "title": "Flooding in Santa Fe: Water Reshapes the Landscape",
+  "subtitle": "An interactive geographic look at an extreme weather event",
+  "cover": {
+    "type": "full",
+    "media": "https://example.com/cover.jpg"
+  },
+  "body": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "The Onset of the Emergency"
+    },
+    {
+      "type": "paragraph",
+      "text": "Heavy rainfall began on March 20 across northern Santa Fe, causing severe flooding within hours..."
+    },
+    {
+      "type": "map",
+      "map_type": "express",
+      "center": [-60.7, -29.2],
+      "zoom": 9,
+      "features": [
+        {
+          "type": "area",
+          "geometry": "...",
+          "popup": {
+            "title": "Flooded Zone",
+            "description": "This area remained underwater for 5 days."
+          }
+        }
+      ],
+      "legend": true
+    },
+    {
+      "type": "sidecar",
+      "layout": "docked",
+      "slides": [
+        {
+          "media_panel": {
+            "type": "image",
+            "url": "https://example.com/flood.jpg"
+          },
+          "narrative_panel": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Voices from the Ground"
+            },
+            {
+              "type": "quote",
+              "text": "We’ve never seen the water rise this fast. — Marta G., resident of Reconquista"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "credits": [
+    "Photos: Télam News Agency",
+    "Data: National Meteorological Service"
+  ]
+}
+
+Input: ""DeSmog
+DeSmog
+Would you rent out a property for less than half of what you need to pay off your mortgage? The federal government is the owner of the $34 billion Trans Mountain pipeline expansion (TMX), yet charges oil companies less than half of the tolls required to recover the eye-watering capital costs owed to the Canadian taxpayer.
+According to a newreportfrom the International Institute of Sustainable Development (IISD), this amounts to a subsidy to the fossil fuel sector of up to $18.8 billion, or$1,248per Canadian household.
+If externalized costs are included – such as unused capacity on other pipelines from Alberta, the impacts of carbon emissions and potential oil spills in Canada’s busiest port – those public giveaways rise to as much as$30.5 billion.
+Stay up to date with DeSmog news and alerts
+Low-balled pipeline tolls might be a windfall for the oil patch but it means the eventual sale price of the pipeline will also be reduced. This would lock in those subsidies even after the pipeline is sold, ensuring Canadians are on the hook for billions inunrecoveredcapital costs. The oil industry is currently demonstrating their gratitude to the Canadian public by insteadappealingto the National Energy Regulator to further reduce the already inadequate tolls they are paying.
+This whole mess started in 2013 when the former Trans Mountain owner Kinder Morgan received approval from the federal government for a toll calculation formula based on estimated costs for the pipeline expansion of $7.4 billion. By 2018, the projected costs exceeded these negotiated toll revenues and Kinder Morgan made the sound business decision to back away from the project.
+Bullied by a loud public campaign from the oil industry, the Trudeau government stepped in to buy the risky pipeline in 2019 but failed to protect Canadians by either updating the 2013 cost estimates used to calculate the pipeline tolls, or by renegotiating new contracts with pipeline users. Every pipeline in the western world charges toll rates equal or exceeding the capital cost plus a 12-15 percent return on investment –except TMX.
+“The oil industry is the one that’s allegedly benefiting from the pipeline,” Simon Fraser University professorTom Gunton, author of the IISD report, told DeSmog. “The bottom line is the oil industry should be paying for the full capital cost, not the taxpayer.”
+Double the Rates?
+The IISD study calculated that to recoup the actual costs of TMX, toll rates would need to more thandoublefrom the current $11.37 to $24.53 per barrel. However, there are several problems with this solution.
+Many companies have signed long-term contracts with TMX to 2044, legally obligating them to utilize 80 percent of the pipeline capacity based on the current inadequate toll rates, which they are now seeking to further reduce.
+The time to renegotiate these agreements was in 2019, before Ottawa committed billions in public money to this boondoggle. Doubling tolls now would likely result in long legal challenges, or companies choosing to void their contracts in favour of lower cost shipping options already available to Alberta producers, such as the Enbridge pipeline to the U.S. Gulf Coast.
+Adding an additional $13 per barrel to what is already a high-cost, low-value product would further undermine the already poor economics of shipping Alberta oil to distant markets in the relatively small AFRAmax tankers capable of transiting the shallowSecond Narrowschannel in Canada’s busiest port.
+The 20 percent of Trans Mountain capacity not under long-term contract is also competing in open “spot” bids with excess capacity on the Enbridge pipeline to the Gulf Coast that is between$2.39 and $8.84per barrel cheaper than tanker deliveries to California or China. This means thatone fifthof the TMX capacity will likely remain underutilized – a situation that will be far worse after 2044 when long term contracts expire. Doubling the TMX tolls would only accelerate the exodus away from this dubious public investment.
+And In spite of years of loud rhetoric from the oil patch, pipeline capacity from Western Canadaexceededproduction even before the TMX completion. As the world decarbonizes, this excess shipping capacity could balloon to 4 million barrels per day by 2050 according to recentprojectionsby the Canadian Energy Regulator.
+A Conservative Proposal
+The long-term economics of TMX therefore seem doomed and time is short to avoid saddling beleaguered Canadian taxpayers with a permanent multi-billion-dollar subsidy to the still-profitable oil sector. But if raising TMX tolls to cover the enormous public shortfall is unlikely to work, what would?
+Gunton suggests a more practical plan to recoup those costs, which also has historical precedent. “The best way is to put a levy on all oil shipments exported from Western Canada, so every oil company pays an extra dollar, $1.50 or dollar to $2 a barrel levy as part of the TMX cost recovery fund to leave taxpayers whole. If you do that for 10 years, the taxpayer subsidy would be repaid.”
+But wouldn’t such a policy be unfair to oil producers not using Trans Mountain? The IISD report points to industrysubmissionsmade while lobbying to get TMX built that projected the new pipeline would benefit the entire oil patch – not just the companies using it – by an estimated $49.8 billion in after-tax profits.
+In fact Enbridge recentlyslashedthe tolls on their pipeline to the Gulf Coast by over $1.60 per barrel to avoid losing market share to TMX. This industry windfall on competitive pipeline tolls would not have existed without the billions invested by the Canadian public. A 10-year federal export levy on Western Canadian crude would recoup that money, while returning net pipeline costs to where they were only one month ago.
+Of course, the usual industry cheerleaders may howl in protest at the suggestion that Ottawa should impose incremental costs on the sacrosanct oil patch, preferring instead to have everyday Canadians hold the bag on TMX to the tune of over $1,200 per household.
+However, the Alberta government under Progressive Conservative Premier Don Getty passed a very similar levy on consumers – mostly in Eastern Canada – to prevent the bankruptcy of TransCanada after the natural gas market tanked in 1986. According to the IISD report, “Alberta passed theTake-or Pay Cost Sharing Actin 1986 that imposed a levy on natural gas shipments to consumers that covered the potential losses of TransCanada on its take-or-pay contracts.”
+Gunton believes this political precedent suggests an export levy could likewise be passed by the federal government on Western Canadian crude exports. “This is a very cost-effective way of covering the money spent on the pipeline… Enbridge has already cut their tolls so the whole entire oil industry is getting some benefit from TMX. So the entire oil industry should cough up $1 to $2 dollars a barrel for 10 years to cover the cost of it.”
+There is $18.8 billion in sunk capital costs alone that could be recouped for the taxpayer by this fairly simple policy change, but does the federal government possess the political will to do it? Prime Minister Justin Trudeau has pledged toeliminateall inefficient fossil fuel subsidies. This would seem to be an excellent place to start.
+And what would be the likelihood of a future Prime Minister Pierre Poilievre imposing such a levy of the oil industry? Gunton offers this thought: “He’s going on about the carbon tax putting the big burden on Canadian taxpayers, and so to be consistent, he should also protect Canadian taxpayers from having to pay a subsidy for the oil industry on TMX…The oil industry is the one that’s allegedly benefiting from the pipeline. The bottom line is the oil industry should be paying for the full capital cost, not the taxpayer.”
+Stay up to date with DeSmog news and alerts
+On stage at a PragerU fundraiser, the Alberta premier, under fire for allegedly encouraging U.S. leaders to influence Canadian politics, said 'I come in peace'.
+Retired politician Barry Penner is heading a Resource Works campaign taking aim at the province’s climate and energy policy.
+New DeSmog map shows how the leader of Canada's Conservative Party is linked to Koch Industries, Elon Musk, and former prime minister Stephen Harper.
+A DeSmog dispatch from Prince Rupert, which could be ground zero for Canada’s next big oil export fight.
+DeSmog
+Clearing the PR Pollution
+Sections
+Databases
+Topics
+DeSmog
+Follow
+Newsletter
+DeSmog
+Clearing the PR Pollution
+Follow
+Newsletter
+Website bySeriousOtters
+Stay up to date with DeSmog news and alerts
+Stay up to date with DeSmog news and alerts
+Subscribe
+Donate
+Stay up to date with DeSmog news and alerts"
+"
