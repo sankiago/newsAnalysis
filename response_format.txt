@@ -1,0 +1,21 @@
+{
+	title: el que ya está en el artículo pero en español
+	subtitulo: texto cautivante según las tendencias periodísticas actuales,
+	coordinate_system: sistema de coordenadas usadas en todo el json
+	abstract: {
+		details:texto, 
+		location: (objeto geográfico más relevante en la noticia) {
+				label: input geocodificable por ArcGIS Pro lo más preciso posible (Al menos País, ciudad)
+				type: El tipo de objeto geográfico (punto, puntos, líneas, polígonos o área)
+				coordinates: [[lat, long (coordenadas del objeto geográfico)]]
+		}
+	},
+	body: [{
+			section: nombre de la sección,
+			content: contenido de la sección,
+			location: {
+				label: input geocodificable por ArcGIS Pro lo más preciso posible (Al menos País, ciudad)
+				type: El tipo de objeto geográfico (punto, puntos, líneas, polígonos o área)
+				coordinates: [[lat, long (coordenadas del objeto geográfico)]]
+		}]
+}

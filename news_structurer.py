@@ -6,12 +6,13 @@ import concurrent.futures
 
 #importando api key
 load_dotenv()
-key = os.getenv("OPENAI_API_KEY")
+key = os.getenv("DEEPSEEK_API")
 print(f"El api key es:\n{key}\n")
 
 # Configura tu API key  
 client = OpenAI(
-    api_key=key
+    api_key=key,
+    base_url="https://api.deepseek.com"
 )
 
 # Carga el archivo Excel
@@ -21,12 +22,14 @@ df = pd.read_excel(archivo_excel)
 # Itera sobre las entradas y utiliza la API
 def estructurar_noticia(prompt):
     try:
-        response = client.responses.create(
-            model="gpt-4o",  # Cambia el modelo si necesitas otro
-            instructions = "Eres un storyteller geográfico profesional que sabe como dar una noticia siguiendo los paradigmas actuales de periodismo interactivo. Tu tarea es realizar un resúmen que sea entendible por un adolescente de 15 años de la noticia en español identificando los puntos, líneas, polígonos o áreas relevantes en la misma. No uses un tono tan informal, sino más bien accesible pero de periodista",
-            input = prompt
+        response = client.chat.completions.create(
+            model="deepseek-chat",  # Cambia el modelo si necesitas otro
+            messages=[
+                {'role': "system", "content": "Eres un storyteller geográfico profesional que sabe como dar una noticia siguiendo los paradigmas actuales de periodismo interactivo. Tu tarea es realizar un resúmen que sea entendible por un adolescente de 15 años de la noticia en español identificando los puntos, líneas, polígonos o áreas relevantes en la misma. No uses un tono tan informal, sino más bien accesible pero de periodista"},
+                {"role":"user", "content": prompt}
+            ]
         )
-        return response.choices[0].message["content"]
+        return response.choices[0].message.content
     except Exception as e:
         return f"Error: {e}"
 
@@ -48,6 +51,8 @@ df['Entrada'] = "Título: "+ df['title'] + "\n" + df['content']
 #     print(f'Noticia {idx+1}/{len(df)} estructurada')
 
 prompts = prompt_base + "\n" + df['Entrada']
+# prompts = [f"{prompt_base}\n{entrada}" for entrada in df['Entrada']]
+# prompts = [prompts[0]]
 
 # Using ThreadPoolExecutor to make parallel requests
 with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -56,5 +61,6 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 # Agrega los resultados de vuelta al dataframe
 df['Resultados'] = results
 
+# print(results)
 # Guarda los resultados en un nuevo archivo Excel
 df.to_excel("noticias_estructuradas2.xlsx", index=False)
