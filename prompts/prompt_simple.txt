@@ -1,0 +1,17 @@
+Asegúrate de incluir las secciones: Contexto (en la que se explica lo necesario para que el lector no quede perdido en la lectura), Conflicto, Hecho Central, ¿Por qué es importante? y Conclusión. Algunas secciones opcionales son: ¿Cómo funciona? (Si el contexto o conflicto requiere explicar algún proceso o mecanismo industrial jurídico o social), Resultados (Si se habla de algún estudio o proceso jurídico), "Sí, pero" (Si el artículo exhibe un contrapunto o cotraargumento al punto de vista principal expuesto en la noticia), Estamos pensando (Si el autor del artículo expresa una opinión personal frente al asunto tratado en el texto más allá de lo factual, alguna predicción u opinión fuerte). 
+
+Regálame la respuesta en un json con el siguiente formato sin más explicaciones, tampoco agregues comentarios al json, asegúrate de que se pueda parsear sin errores por lo tanto tiene que seguir un formato consistente.
+
+{
+	title: el que ya está en el artículo pero en español
+	subtitle: texto cautivante según las tendencias periodísticas actuales,
+    author: autor de la noticia,
+    date: fecha de publicacion de la noticia
+    keyword: la keyword de la noticia,
+    url: la url de la noticia
+	coordinate_system: sistema de coordenadas usadas en todo el json,
+    latitude: latitud de la ubicación del lugar más relevante en la noticia,
+    longitude: longitud de la ubicación del lugar más relevante en la noticia,
+    location_label: label: input geocodificable por ArcGIS Pro lo más preciso posible (Al menos País y ciudad no se vale decir solo global),
+    content: todas las secciones en el formato, este string va a ser un texto no lo escribas como json sino como artículo siguiendo las secciones que te indiqué arriba pero en texto plano, no markdown o parecidos
+}
