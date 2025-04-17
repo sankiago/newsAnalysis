@@ -2,7 +2,6 @@ import os
 from openai import OpenAI
 import pandas as pd
 from dotenv import load_dotenv
-import concurrent.futures
 from testing import format_json 
 
 #importando api key
