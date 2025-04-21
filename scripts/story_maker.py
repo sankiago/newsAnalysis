@@ -13,7 +13,7 @@ print(f"El api key es:\n{key}\n")
 # Configura tu API key  
 client = OpenAI(
     api_key=key,
-    base_url="https://api.deepseek.com"
+    base_url="https://api.deepseek.com",
 )
 
 def file_in_sibling_folder(folder:str, file:str):
@@ -24,10 +24,10 @@ def file_in_sibling_folder(folder:str, file:str):
 
 label = '25-abr'
 archivo_excel = file_in_sibling_folder('outputs', f'{label}_extraction.xlsx') 
-context_prompt = file_in_sibling_folder('prompts', 'context_noticia.txt') 
-user_prompt = file_in_sibling_folder('prompts', 'prompt_simple.txt') 
-output_path = file_in_sibling_folder('outputs', f'{label}_structured.xlsx') 
-log_path = file_in_sibling_folder('outputs', f'{label}_structured_progress.txt') 
+context_prompt = file_in_sibling_folder('prompts', 'context_storymap.txt') 
+user_prompt = file_in_sibling_folder('prompts', 'prompt_storymap.txt') 
+output_path = file_in_sibling_folder('outputs', f'{label}_stories.xlsx') 
+log_path = file_in_sibling_folder('outputs', f'{label}_stories_progress.txt') 
 
 # Carga el archivo Excel
 df = pd.read_excel(archivo_excel)
@@ -50,20 +50,19 @@ def estructurar_noticia(prompt):
             messages=[
                 {'role': "system", "content": contexto},
                 {"role": "user", "content": prompt}
-            ]
+            ],
+            temperature=1.0,
         )
         return response.choices[0].message.content
     except Exception as e:
         return f"Error: {e}"
 
 # Concatenar datos para la entrada
-df['Entrada'] = "Título: "+ df['title'] + "\n autor: " + df['author'] + "\n Fecha:" + df['date'] + "\n url:"+ df['url'] + "\n Keyword: " + df['keyword'] + '\n' + df['content']
+df['noticia'] = "Título: "+ df['title'] + "\n autor: " + df['author'] + "\n Fecha:" + df['date'] + "\n url:"+ df['url'] + "\n Keyword: " + df['keyword'] + '\n' + df['content']
 
 # Itera y procesa cada fila
-resultados = []
-prompts = prompt_base + "\n" + df['Entrada']
-# prompts = prompts[-1:]
-# prompts = prompts[:30]
+df_agrupado = df.groupby('keyword').agg(r'\n---\n'.join).reset_index()
+prompts = prompt_base + "\n" + df_agrupado['noticia']
 
 
 # Leer el índice de progreso
@@ -75,21 +74,22 @@ else:
     
 # Si ya hay resultados parciales, cargarlos
 if os.path.exists(output_path):
-    df_noticias = pd.read_excel(output_path)
+    df_stories = pd.read_excel(output_path)
 else:
-    df_noticias = pd.DataFrame()
+    df_stories = pd.DataFrame()
 
 for idx in range(start_index, len(prompts)):
     print(f'Estructurando noticia {idx+1}/{len(prompts)}')
     prompt = prompts[idx]
     try:
-        noticia = estructurar_noticia(prompt)
-        df_noticia = export_json_to_df(noticia)
-        df_noticias = concat_df(df_noticias, df_noticia)
-        print(df_noticias)
-        df_noticias.to_excel(output_path, index=False)
-        print(f'Noticia {idx+1}/{len(prompts)} estructurada con éxito.\nResultados parciales en {output_path}')
+        story = estructurar_noticia(prompt)
+        df_story = export_json_to_df(story)
+        df_stories = concat_df(df_stories, df_story)
+        print(df_stories)
+        df_stories.to_excel(output_path, index=False)
+        print(f'Story {idx+1}/{len(prompts)} creada con éxito.\nResultados parciales en {output_path}')
     except Exception as e:
-        sys.exit(f"Error al estructurar la noticia {idx} :\n    {e}")
+        print(f"Error al crear la story {idx+1} :\n    {e}")
+        sys.exit(1)
         
 print(f'\n{len(prompts)} noticias estructuradas con éxito, las noticias estructuradas se encuentran en: {output_path}')

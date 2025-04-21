@@ -1,0 +1,34 @@
+Para elaborar la historia sigue las siguientes indicaciones
+
+1) Cuando añadas la definición hazlo así: Palabra + etiqueta gramatical + definición
+2) Cuando hagas cada sección procura sustentarla con al menos una noticia (excepto la sección de definición) cuando lo hagas, agrega el sitio más relevante donde tiene lugar la noticia en el la sección "Noticias de {nombre de la sección}". Es decir, por cada noticia mencionada en la sección, debe existir una entrada en el arreglo "Noticias de {nombre de la sección}" con la ubicación y el label de la ubicación.
+3) Cuando añadas la n-ésima noticia de la historia a una sección hazlo citando en APA modificado así: [n](autores, año) y agrega la cita completa en APA a la sección de referencias
+4) Sigue la metáfora de botella al mar. Cada que se encuentra una noticia referente a la palabra clave se dice que se encuentra una botella con dicha palabra. Cada vez que refieras a una noticia refierete a ella como un hallazgo (ej. Como se encuentra en una botella de noruega, las bicicletas están de moda en oslo.)
+5) Agrega la sección final de referencias donde se mencionen en formato APA todas las noticias usadas en la historia, aquí no se tienen que mencionar historias nuevas, solo el párrafo de todas las citas de las noticias
+6) En cualquier lugar donde no haya un autor disponible, cita en su lugar el link de donde se trajo la noticia, que nunca aparezca algo como "no disponible" o "no se encontró".
+
+Asegúrate de incluir las secciones:
+    Definición: ¿Qué significa la palabra?
+    Introducción: Transición amigable entre el subtitulo y el contexto
+    Contexto: responde las preguntas:¿Qué situaciones motivan e ilustran el significado y la historia de la palabra en la historia?
+    Hallazgos: número de noticias usadas en la historia, únicamente un número, nada de texto
+    Es preocupante: ¿Qué situaciones ilustran la trágica, negativa y compleja realidad asociada a la palabra clave?
+    Nos anima: ¿Qué iniciativas, acciones legales o movimientos nos dejan ver que sí se están haciendo cosas al respecto de las situaciones negativas que rodean a a la palabra clave?
+    Sí pero: ¿Qué limitaciones y cosas negativas se encuentran en las iniciativas actuales?
+        Esperanza futura: Conclusión - ¿Qué situaciones, pronósticos o ideas nos pintan un futuro mejor en el que las personas tomamos más acción, conciencia? ¿Cómo es ese futuro donde la cultura y el humanismo florece?
+
+Regálame la respuesta en un json con el siguiente formato sin más explicaciones, tampoco agregues comentarios al json, asegúrate de que se pueda parsear sin errores por lo tanto tiene que seguir un formato consistente. Reemplaza toda comilla doble dentro de un string (") por comilla simple (') en la respuesta porque si no, no se parsea el json correctamente.
+
+{
+	titulo: la palabra clave (en español) con la que se está trabajando
+	subtitulo: texto cautivante según las tendencias periodísticas actuales que capture la escencia de la historia,
+	sistema_de_coordenadas: sistema de coordenadas usadas en todo el json
+    
+    "Nombre de la sección" : 'Contenido de la sección'
+    "Noticias de {nombre de la sección}" (excepto para definición, Introducción,):'[
+                                            {noticia_numero: #,
+                                            coordenadas: (coordenadas de la noticia #), 
+                                            label: label de la ubicación de la noticia geocodificable por ArcGIS Pro lo más preciso posible (Al menos País, ciudad)
+                                            }
+                                        ]' (con la indentación adecuada para la lectura por humanos)
+}

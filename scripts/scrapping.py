@@ -272,7 +272,7 @@ def cargar_palabras_desde_txt(ruta_archivo):
 def main():
     climate_keywords = cargar_palabras_desde_txt('keywords.txt')
     #procure no usar caracteres especiales ni espacios en el label, se va a usar el label en alguna ruta
-    label = 'intento_1'
+    label = '25-abr'
     if os.path.exists(rf'./outputs/{label}_extraction_progress.txt'):
         print(f'Se reanuda el scrapping: {label}')
     

@@ -1,6 +1,6 @@
 Asegúrate de incluir las secciones: Contexto (en la que se explica lo necesario para que el lector no quede perdido en la lectura), Conflicto, Hecho Central, ¿Por qué es importante? y Conclusión. Algunas secciones opcionales son: ¿Cómo funciona? (Si el contexto o conflicto requiere explicar algún proceso o mecanismo industrial jurídico o social), Resultados (Si se habla de algún estudio o proceso jurídico), "Sí, pero" (Si el artículo exhibe un contrapunto o cotraargumento al punto de vista principal expuesto en la noticia), Estamos pensando (Si el autor del artículo expresa una opinión personal frente al asunto tratado en el texto más allá de lo factual, alguna predicción u opinión fuerte). 
 
-Regálame la respuesta en un json con el siguiente formato sin más explicaciones, tampoco agregues comentarios al json, asegúrate de que se pueda parsear sin errores por lo tanto tiene que seguir un formato consistente.
+Regálame la respuesta en un json con el siguiente formato sin más explicaciones, tampoco agregues comentarios al json, asegúrate de que se pueda parsear sin errores por lo tanto tiene que seguir un formato consistente y no usar comillas dobles dentro del string, solo comillas simples.
 
 {
 	title: el que ya está en el artículo pero en español
